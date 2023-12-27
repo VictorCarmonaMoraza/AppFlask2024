@@ -18,3 +18,7 @@ def saludar(nombre):
 def edad(edad):
     app.logger.info(f'Hemos entrado al path {request.path}')
     return f'Tu edad es: {edad}'
+
+@app.route('/mostrar/<nombre>', methods=['GET','POST'])
+def mostrar_nombre(nombre):
+    return f'Tu nombre es {nombre}'
