@@ -1,4 +1,4 @@
-from flask import Flask, request
+from flask import Flask, request, render_template
 
 app = Flask(__name__)
 
@@ -22,3 +22,7 @@ def edad(edad):
 @app.route('/mostrar/<nombre>', methods=['GET','POST'])
 def mostrar_nombre(nombre):
     return f'Tu nombre es {nombre}'
+
+@app.route('/mostrar2/<nombre2>', methods=['GET','POST'])
+def mostrar_nombre2(nombre2):
+    return render_template('mostrar.html',nombre_llave =nombre2)
