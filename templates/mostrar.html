@@ -7,5 +7,15 @@
 <body>
 <h1>Mostrar Valores</h1>
 <p>Tu nombre es: {{nombre_llave}}</p>
+<div>
+    <a href="/">Regresar al inicio</a>
+</div>
+<div>
+    <a href="{{url_for('hello_world')}}">Regresar al inicio2</a>
+</div>
+
+<div>
+    <a href="{{url_for('edad', edad=32)}}">Mostrar Edad</a>
+</div>
 </body>
 </html>

@@ -1,4 +1,5 @@
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, url_for
+from werkzeug.utils import redirect
 
 app = Flask(__name__)
 
@@ -26,3 +27,22 @@ def mostrar_nombre(nombre):
 @app.route('/mostrar2/<nombre2>', methods=['GET','POST'])
 def mostrar_nombre2(nombre2):
     return render_template('mostrar.html',nombre_llave =nombre2)
+
+@app.route('/redireccionar')
+def redireccionar():
+    ##Redirecciona a otro metodo que es lo que ira en el url_for
+    #Con url for le decimos el metodo que se va a ejecutar
+    return redirect(url_for('hello_world'))
+
+@app.route('/redireccionar2')
+def redireccionar2():
+    ##Redirecciona a otro metodo que es lo que ira en el url_for
+    #Con url for le decimos el metodo que se va a ejecutar
+    return redirect(url_for('mostrar_nombre', nombre = 'Victor'))
+
+
+@app.route('/redireccionar3')
+def redireccionar3():
+    ##Redirecciona a otro metodo que es lo que ira en el url_for
+    #Con url for le decimos el metodo que se va a ejecutar
+    return render_template('mostrar.html', nombre_llave='Pedro')
