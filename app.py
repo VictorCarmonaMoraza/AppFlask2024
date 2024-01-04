@@ -1,12 +1,15 @@
 from flask import Flask, request, render_template, url_for, jsonify, session
+from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.exceptions import abort
 from werkzeug.utils import redirect
 
+
+
 app = Flask(__name__)
 
 #Configuracion de la BD
-USER_DB = 'postgre'
+USER_DB = 'postgres'
 PASS_DB = 'Vcarmona32'
 URL_DB = 'localhost'
 NAME_DB = 'APPFLASK_DB'
@@ -17,6 +20,26 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] =False
 
 #Inicializacion del objeto db de sqlalchemy. Instancioamos objeto
 db = SQLAlchemy(app)
+
+
+##Configurar flask-migrate
+migrate = Migrate()
+migrate.init_app(app,db)
+
+class Persona(db.Model):
+    id = db.Column(db.Integer, primary_key =True)
+    nombre = db.Column(db.String(250))
+    apellido = db.Column(db.String(250))
+    email = db.Column(db.String(250))
+
+    ##Obtrener una represetnacion de la clase
+    def __str__(self):
+        return (
+            f'Id:{self.id}'
+            f'Nombre:{self.nombre}'
+            f'Apellido:{self.apellido}'
+            f'Email:{self.email}'
+        )
 
 
 app.secret_key ='Mi_llave_secreta'
