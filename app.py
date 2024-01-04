@@ -1,8 +1,23 @@
 from flask import Flask, request, render_template, url_for, jsonify, session
+from flask_sqlalchemy import SQLAlchemy
 from werkzeug.exceptions import abort
 from werkzeug.utils import redirect
 
 app = Flask(__name__)
+
+#Configuracion de la BD
+USER_DB = 'postgre'
+PASS_DB = 'Vcarmona32'
+URL_DB = 'localhost'
+NAME_DB = 'APPFLASK_DB'
+FULL_URL_DB =f'postgresql://{USER_DB}:{PASS_DB}@{URL_DB}/{NAME_DB}'
+
+app.config['SQLALCHEMY_DATABASE_URI'] = FULL_URL_DB
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] =False
+
+#Inicializacion del objeto db de sqlalchemy. Instancioamos objeto
+db = SQLAlchemy(app)
+
 
 app.secret_key ='Mi_llave_secreta'
 
