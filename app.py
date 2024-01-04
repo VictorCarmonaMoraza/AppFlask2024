@@ -1,14 +1,39 @@
-from flask import Flask, request, render_template, url_for, jsonify
+from flask import Flask, request, render_template, url_for, jsonify, session
 from werkzeug.exceptions import abort
 from werkzeug.utils import redirect
 
 app = Flask(__name__)
 
+app.secret_key ='Mi_llave_secreta'
+
 '''http://localhost:5000/'''
 @app.route('/')
-def hello_world():
-    app.logger.info(f'Hemos entrado al path {request.path}')
-    return 'Hola Mundo desde Flask'
+def inicio():
+    if 'username' in session:
+        app.logger.info(f'Hemos entrado al path {request.path}')
+        return f'El usuario ha hecho login: {session["username"]}'
+    return 'No ha hecho login'
+
+@app.route('/login', methods=['GET','POST'])
+def login():
+    ##Diferenciar si es una peticionde tipo GET o de tipo POST
+    if request.method == 'POST':
+        ##Omitimos validaciones de usuario y password
+        ##Rescatamos del formulario el usuario
+        usuario = request.form['username']
+        #Agregamos usuario a session
+        session['username'] = usuario
+        return redirect(url_for('inicio'))
+    return render_template('login.html')
+
+##salir de la session
+@app.route('/logout')
+def logout():
+    ##Eliminamos de la session el usuario
+    session.pop('username')
+    ##Redireccionamos el metodo de inicio
+    return redirect(url_for('inicio'))
+
 
 @app.route('/saludar/<nombre>')
 def saludar(nombre):
@@ -33,7 +58,7 @@ def mostrar_nombre2(nombre2):
 def redireccionar():
     ##Redirecciona a otro metodo que es lo que ira en el url_for
     #Con url for le decimos el metodo que se va a ejecutar
-    return redirect(url_for('hello_world'))
+    return redirect(url_for('inicio'))
 
 @app.route('/redireccionar2')
 def redireccionar2():
