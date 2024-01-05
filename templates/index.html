@@ -2,9 +2,39 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Listado de Personas</title>
+    <title >Listado de Personas</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 </head>
+
 <body>
-<h1>Listado de Personas</h1>
+<div class="container">
+<h1 class="text-center">Sistema de administracion de Personas (SAP)</h1>
+<div>
+    Total de personas: {{total_personasTemplate}}
+</div>
+<br>
+<br>
+<div>
+    <table border="1" class="table table-hover border border-danger">
+        <thead class="table-warning">
+            <th scope="row">Id</th>
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>Email</th>
+        </thead>
+        <tbody>
+        <!--Los tr deben de repetirse tantas veces como Personas tenga la lista-->
+        {%  for persona in personasTemplate %}
+        <tr>
+            <td class="table-primary text-center">{{persona.id}}</td>
+            <td class="table-secondary">{{persona.nombre}}</td>
+            <td class="table-success">{{persona.apellido}}</td>
+            <td class="table-info">{{persona.email}}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+    </div>
 </body>
 </html>

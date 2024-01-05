@@ -1,4 +1,5 @@
 from flask import Flask, request, render_template, url_for, jsonify, session
+from flask_bootstrap import Bootstrap
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.exceptions import abort
@@ -7,6 +8,7 @@ from werkzeug.utils import redirect
 
 
 app = Flask(__name__)
+Bootstrap(app)
 
 #Configuracion de la BD
 USER_DB = 'postgres'
