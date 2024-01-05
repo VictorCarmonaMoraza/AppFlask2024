@@ -21,6 +21,7 @@
             <th>Nombre</th>
             <th>Apellido</th>
             <th>Email</th>
+            <th>Detalle</th>
         </thead>
         <tbody>
         <!--Los tr deben de repetirse tantas veces como Personas tenga la lista-->
@@ -30,6 +31,7 @@
             <td class="table-secondary">{{persona.nombre}}</td>
             <td class="table-success">{{persona.apellido}}</td>
             <td class="table-info">{{persona.email}}</td>
+            <td class="table-danger text-center"><a href="ver/{{persona.id}}"><button type="button" class="btn btn-primary border border-dark">Ver</button> </a></td>
         </tr>
         {% endfor %}
         </tbody>

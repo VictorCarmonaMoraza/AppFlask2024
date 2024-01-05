@@ -58,6 +58,14 @@ def crearPersona():
     app.logger.debug(f'Total Personas:{total_personasBD}')
     return render_template('index.html',personasTemplate =personasBD, total_personasTemplate = total_personasBD)
 
+@app.route('/ver/<int:id>')
+def ver_detalle(id):
+    #Recuperamos la persona segun el id proporcionado
+    #persona = Persona.query.get(id)
+    personaBD = Persona.query.get_or_404(id)
+    app.logger.debug((f'Ver persona: {personaBD}'))
+    return render_template('detalle.html', personaTemplate = personaBD)
+
 '''http://localhost:5000/'''
 @app.route('/')
 def inicio():
