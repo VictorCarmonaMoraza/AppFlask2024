@@ -52,6 +52,8 @@ def crearPersona():
     ##Listado de personas. Nos devolvera todos los objeto persona de nuestra base de datos
     personasBD = Persona.query.all()
     total_personasBD = Persona.query.count()
+    app.logger.debug(f'Listado Personas:{personasBD}')
+    app.logger.debug(f'Total Personas:{total_personasBD}')
     return render_template('index.html',personasTemplate =personasBD, total_personasTemplate = total_personasBD)
 
 '''http://localhost:5000/'''
