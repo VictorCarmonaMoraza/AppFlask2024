@@ -44,6 +44,16 @@ class Persona(db.Model):
 
 app.secret_key ='Mi_llave_secreta'
 
+
+@app.route('/persona')
+@app.route('/index')
+@app.route('/index.html')
+def crearPersona():
+    ##Listado de personas. Nos devolvera todos los objeto persona de nuestra base de datos
+    personasBD = Persona.query.all()
+    total_personasBD = Persona.query.count()
+    return render_template('index.html',personasTemplate =personasBD, total_personasTemplate = total_personasBD)
+
 '''http://localhost:5000/'''
 @app.route('/')
 def inicio():
