@@ -1,11 +1,10 @@
 from flask import Flask, request, render_template, url_for, jsonify, session
 from flask_bootstrap import Bootstrap
 from flask_migrate import Migrate
-from flask_sqlalchemy import SQLAlchemy
 from werkzeug.exceptions import abort
 from werkzeug.utils import redirect
-
-
+from Models.PersonaModel import Persona
+from Database.database import db
 
 app = Flask(__name__)
 Bootstrap(app)
@@ -21,27 +20,21 @@ app.config['SQLALCHEMY_DATABASE_URI'] = FULL_URL_DB
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] =False
 
 #Inicializacion del objeto db de sqlalchemy. Instancioamos objeto
-db = SQLAlchemy(app)
+##db = SQLAlchemy(app)  -->Esto propvoca despues de la refactorizacion referencia circular por lo cual
+## debemos de sacarlo de esta forma y ponerlo de la forma que tenemos en la siguiente linea.
+db.init_app(app)
 
 
 ##Configurar flask-migrate
 migrate = Migrate()
 migrate.init_app(app,db)
 
-class Persona(db.Model):
-    id = db.Column(db.Integer, primary_key =True)
-    nombre = db.Column(db.String(250))
-    apellido = db.Column(db.String(250))
-    email = db.Column(db.String(250))
+##configuracion de flask-wtf
+app.config['SECRET_KEY']='llave_secreta'
 
-    ##Obtrener una represetnacion de la clase
-    def __str__(self):
-        return (
-            f'Id:{self.id}'
-            f'Nombre:{self.nombre}'
-            f'Apellido:{self.apellido}'
-            f'Email:{self.email}'
-        )
+
+
+
 
 
 app.secret_key ='Mi_llave_secreta'
@@ -57,6 +50,15 @@ def crearPersona():
     app.logger.debug(f'Listado Personas:{personasBD}')
     app.logger.debug(f'Total Personas:{total_personasBD}')
     return render_template('index.html',personasTemplate =personasBD, total_personasTemplate = total_personasBD)
+
+@app.route('/agregar', methods=['GET','POST'])
+def agregar_persona():
+    #Primero debemos mostrar el formulario
+    #Creamos un objeto de tipo Persona
+    persona = Persona()
+
+    return  render_template('detalle.html')
+
 
 @app.route('/ver/<int:id>')
 def ver_detalle(id):

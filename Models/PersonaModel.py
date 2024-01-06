@@ -1,4 +1,4 @@
-from app import db
+from Database.database import db
 
 
 class Persona(db.Model):
